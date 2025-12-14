@@ -34,15 +34,11 @@ async def bulk_create_hospitals(
     """
     Bulk create hospitals from CSV file
     
-    CSV Format: name,address,phone (phone is optional)
-    Maximum 20 hospitals per upload
+    **CSV Format:** name,address,phone (phone is optional)
     
-    FLOW:
-    1. Validate CSV → app/services/csv_processor.py
-    2. Create batch record → Database
-    3. Process each hospital → app/services/hospital_client.py
-    4. Activate batch if all succeed → External API
-    5. Return results
+    **Maximum:** 20 hospitals per upload
+    
+    **Returns:** Batch ID, processing results, and individual hospital statuses
     """
     start_time = time.time()
     

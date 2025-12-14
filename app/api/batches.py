@@ -26,13 +26,7 @@ async def list_batches(db: Session = Depends(get_db)):
     """
     List all batch uploads with summary information
     
-    FLOW:
-    1. Query database for all BatchUpload records
-    2. Return list ordered by creation date (newest first)
-    
-    GOES TO:
-    - app/database.py → Database query via get_db()
-    - app/models.py::BatchUpload → Database model
+    Returns batches ordered by creation date (newest first)
     """
     # FLOW → app/models.py::BatchUpload query → Database
     batches = db.query(BatchUpload).order_by(BatchUpload.created_at.desc()).all()
@@ -44,14 +38,7 @@ async def get_batch_details(batch_id: str, db: Session = Depends(get_db)):
     """
     Get detailed results for a specific batch including all hospital records
     
-    FLOW:
-    1. Query BatchUpload by batch_id
-    2. Query all HospitalProcessingResult records for this batch
-    3. Return detailed response with all hospital processing details
-    
-    GOES TO:
-    - app/database.py → Database queries via get_db()
-    - app/models.py::BatchUpload, HospitalProcessingResult → Database models
+    Returns complete batch information with individual hospital processing results
     """
     # FLOW → app/models.py::BatchUpload query → Database
     batch = db.query(BatchUpload).filter(BatchUpload.batch_id == batch_id).first()
